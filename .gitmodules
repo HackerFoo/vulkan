@@ -10,3 +10,6 @@
 [submodule "generate-new/OpenXR-Docs"]
 	path = generate-new/OpenXR-Docs
 	url = git://github.com/KhronosGroup/OpenXR-Docs.git
+[submodule "nix/MoltenVK-nix"]
+	path = nix/MoltenVK-nix
+	url = https://github.com/o1lo01ol1o/MoltenVK-nix.git

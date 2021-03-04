@@ -1,5 +1,5 @@
 { pkgs ? import ./nix/nixpkgs.nix {
-    overlays = [ (self: super: import ../MoltenVK-nix { nixpkgs = self; xcodeVersion = "12.4"; }) ];
+    overlays = [ (self: super: import ./nix/MoltenVK-nix { nixpkgs = self; xcodeVersion = "12.4"; }) ];
   }, compiler ? null
 , forShell ? false, hoogle ? forShell }:
 
