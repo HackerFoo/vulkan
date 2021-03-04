@@ -1,5 +1,5 @@
 # Haskell package overrides
-{ pkgs ? import ./nixpkgs.nix, compiler ? null, hoogle ? false
+{ pkgs ? import <nixpkgs> {}, compiler ? null, hoogle ? false
 , safeVulkanFFI ? false, safeOpenXrFFI ? false, buildProfiling ? false
 , buildInstrumented ? false, openxrNoVulkan ? false }:
 
@@ -8,6 +8,7 @@ with pkgs.haskell.lib;
 let
   gitignore = pkgs.nix-gitignore.gitignoreSourcePure ../.gitignore;
   aggressiveFilter = builtins.filterSource (path: _type:
+    (builtins.match "\.nix$" path == null) && _type != "symlink" && (
     (pkgs.lib.any (x: baseNameOf path == x) [
       "package.yaml"
       "changelog.md"
@@ -19,7 +20,7 @@ let
       "/xr"
       "/khronos-spec"
       "/vma"
-    ]);
+    ]));
   mod = if buildProfiling then
     drv: doHaddock (enableLibraryProfiling drv)
   else
@@ -53,7 +54,7 @@ let
         returnShellEnv = false;
       };
       VulkanMemoryAllocator = self.developPackage {
-        name = "VukanMemoryAllocator";
+        name = "VulkanMemoryAllocator";
         root = gitignore ../VulkanMemoryAllocator;
         modifier = drv: addExtraLibrary (mod drv) pkgs.vulkan-headers;
         returnShellEnv = false;
@@ -61,12 +62,9 @@ let
       vulkan-examples = self.developPackage {
         name = "vulkan-examples";
         root = gitignore ../examples;
-        modifier = drv:
-          addExtraLibrary
-          (addBuildTools (mod drv) [ pkgs.glslang pkgs.shaderc ])
-          pkgs.renderdoc;
+        modifier = drv: addBuildTools (mod drv) [ pkgs.glslang ];
         returnShellEnv = false;
-        cabal2nixOptions = "--flag=renderdoc";
+        #cabal2nixOptions = "--flag=renderdoc";
       };
       generate-new = self.developPackage {
         name = "generate-new";
@@ -130,10 +128,10 @@ let
       language-c = self.language-c_0_9_0_1;
       unification-fd = overrideSrc super.unification-fd {
         src = pkgs.fetchFromGitHub {
-          owner = "Bodigrim";
+          owner = "wrengr";
           repo = "unification-fd";
-          rev = "daf74abc85ce0b86d7688d92402ac446f1496cdf";
-          sha256 = "1k6kx4s3za6p837sb1qhva9axn1j49r0fng9c5c7pfsg28brdpgy";
+          rev = "616c43063bbc201b3992ccb0a01fc54dcec96791";
+          sha256 = "0h20dk0pvm8a9lx8fpdla5vpzla1hjqazv2s4xnnalgvwqpygvny";
         };
       };
     } // pkgs.lib.optionalAttrs hoogle {

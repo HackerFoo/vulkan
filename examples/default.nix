@@ -11,7 +11,7 @@ in if forShell then
   haskellPackages.shellFor ({
     packages = p: [ p.vulkan-examples ];
     buildInputs = with pkgs;
-      [ vulkan-tools-lunarg vulkan-validation-layers shaderc ]
+      [ vulkan-tools-lunarg vulkan-validation-layers ]
       ++ pkgs.lib.optional withOpenXR libglvnd
       ++ pkgs.lib.optional withSwiftshader vulkan-extension-layer
       ++ pkgs.lib.optional buildProfiling [

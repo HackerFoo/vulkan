@@ -1,3 +1,5 @@
+attrs:
+
 let
   nixpkgsSrc = builtins.fetchTarball {
     url =
@@ -5,4 +7,4 @@ let
     sha256 = "1vqqllxzdvvarwydv6yx0qwwl9shqla08ijabvmydi1kwc6388ww";
   };
 
-in import nixpkgsSrc { }
+in import nixpkgsSrc attrs

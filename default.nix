@@ -1,5 +1,7 @@
-{ pkgs ? import ./nix/nixpkgs.nix, compiler ? null
-, forShell ? pkgs.lib.inNixShell, hoogle ? forShell }:
+{ pkgs ? import ./nix/nixpkgs.nix {
+    overlays = [ (self: super: import ../MoltenVK-nix { nixpkgs = self; xcodeVersion = "12.4"; }) ];
+  }, compiler ? null
+, forShell ? false, hoogle ? forShell }:
 
 let
   haskellPackages =
@@ -10,12 +12,13 @@ let
     asciidoctor
     python3
     doxygen
-    vulkan-validation-layers
+    #vulkan-validation-layers
+    vulkan-layers
   ];
 
   packages = p:
     with p;
-    [ vulkan vulkan-utils VulkanMemoryAllocator vulkan-examples openxr ]
+    [ vulkan vulkan-utils VulkanMemoryAllocator vulkan-examples ] # ++ [ openxr ]
     ++ pkgs.lib.optional (p.ghc.version == "8.10.4") generate-new;
 
 in if forShell then

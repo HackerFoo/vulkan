@@ -246,13 +246,13 @@ flags:
   have-shaderc:
     description: Set this flag if you have shaderc (and the glslc executable) installed.
       It enables building the examples which use HLSL shaders.
-    default: yes
+    default: no
     manual: yes
   raytracing:
     description: Set this flag if you have a version of glslValidator recent enough
       to compile ray tracing shaders. It enables building the examples which use ray
       tracing.
-    default: yes
+    default: no
     manual: yes
   vr:
     description: Set this flag if you have a system with the OpenXR loader

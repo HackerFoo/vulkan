@@ -24,12 +24,12 @@ source-repository head
 flag have-shaderc
   description: Set this flag if you have shaderc (and the glslc executable) installed. It enables building the examples which use HLSL shaders.
   manual: True
-  default: True
+  default: False
 
 flag raytracing
   description: Set this flag if you have a version of glslValidator recent enough to compile ray tracing shaders. It enables building the examples which use ray tracing.
   manual: True
-  default: True
+  default: False
 
 flag renderdoc
   description: Use the renderdoc API to mark the beginning and end of the 'offscreen' example so that it can be captured.
